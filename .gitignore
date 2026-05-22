@@ -19,6 +19,7 @@ uploads/
 .qa-logs/
 .superpowers/
 docs/superpowers/
+docs/requirements_extract/
 
 data/samples/
 data/ingest/qa_extra.csv

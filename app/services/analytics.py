@@ -25,6 +25,8 @@ def get_dashboard_summary():
         "user_type_distribution": _count(logs, "user_type"),
         "application_distribution": _count(logs, "application", limit=8),
         "top_users": _top_users(logs),
+        "access_heatmap": _access_heatmap(logs),
+        "user_profiles": _user_profiles(logs),
         "anomaly_types": _anomaly_types(logs),
         "recent_alerts": [alert.to_dict() for alert in alerts],
     }
@@ -124,6 +126,52 @@ def _top_users(logs):
         {"user_id": user, "traffic_mb": round(value / 1024 / 1024, 2), "visits": counts[user]}
         for user, value in sorted(traffic.items(), key=lambda item: item[1], reverse=True)[:10]
     ]
+
+
+def _access_heatmap(logs):
+    buckets = defaultdict(int)
+    for log in logs:
+        buckets[(log.timestamp.weekday(), log.timestamp.hour)] += log.total_bytes
+    return [
+        [hour, weekday, round(value / 1024 / 1024, 2)]
+        for (weekday, hour), value in sorted(buckets.items())
+    ]
+
+
+def _user_profiles(logs):
+    grouped = defaultdict(list)
+    for log in logs:
+        grouped[log.user_id].append(log)
+
+    profiles = []
+    for user_id, rows in grouped.items():
+        total_bytes = sum(row.total_bytes for row in rows)
+        categories = Counter(row.category for row in rows)
+        protocols = Counter(row.protocol for row in rows)
+        hours = Counter(row.timestamp.hour for row in rows)
+        anomaly_count = sum(1 for row in rows if row.is_anomaly)
+        profiles.append(
+            {
+                "user_id": user_id,
+                "user_type": rows[0].user_type,
+                "visits": len(rows),
+                "traffic_mb": round(total_bytes / 1024 / 1024, 2),
+                "favorite_category": categories.most_common(1)[0][0],
+                "main_protocol": protocols.most_common(1)[0][0],
+                "active_hour": f"{hours.most_common(1)[0][0]:02d}:00",
+                "anomaly_count": anomaly_count,
+                "risk_level": _profile_risk(anomaly_count, len(rows), total_bytes),
+            }
+        )
+    return sorted(profiles, key=lambda item: (item["anomaly_count"], item["traffic_mb"]), reverse=True)[:8]
+
+
+def _profile_risk(anomaly_count, visits, total_bytes):
+    if anomaly_count >= 3 or total_bytes >= 2_500_000_000:
+        return "高"
+    if anomaly_count > 0 or visits >= 40:
+        return "中"
+    return "低"
 
 
 def _anomaly_types(logs):

@@ -5,6 +5,9 @@
   <div class="panel wide"><h2>时间维度：上网高峰</h2><div class="chart" id="analysisTraffic"></div></div>
   <div class="panel"><h2>群体维度</h2><div class="chart" id="userTypeChart"></div></div>
   <div class="panel"><h2>内容维度</h2><div class="chart" id="appChart"></div></div>
+  <div class="panel wide"><h2>访问热力图</h2><div class="chart" id="accessHeatmap"></div></div>
+  <div class="panel"><h2>静态趋势报告</h2><img class="static-chart" src="/api/charts/static/traffic.png" alt="静态流量趋势图"></div>
+  <div class="panel wide"><h2>用户行为画像</h2><div class="table-wrap"><table><thead><tr><th>用户</th><th>类型</th><th>访问次数</th><th>流量</th><th>偏好内容</th><th>活跃时段</th><th>风险</th></tr></thead><tbody id="profileTable"></tbody></table></div></div>
   <div class="panel wide"><h2>流量维度：用户排行</h2><div id="analysisTopUsers" class="rank-list large"></div></div>
 </section>
 {% endblock %}

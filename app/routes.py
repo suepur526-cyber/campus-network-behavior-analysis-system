@@ -1,4 +1,5 @@
 from pathlib import Path
+import io
 
 from flask import Blueprint, current_app, jsonify, make_response, redirect, render_template, request, session, url_for
 
@@ -115,6 +116,39 @@ def api_system_status():
 @login_required
 def api_report():
     return jsonify(get_demo_report())
+
+
+@bp.route("/api/charts/static/traffic.png")
+@login_required
+def api_static_traffic_chart():
+    import matplotlib
+
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+
+    summary = get_dashboard_summary()
+    rows = summary["traffic_by_hour"][-24:]
+    labels = [row["time"] for row in rows]
+    values = [row["gb"] for row in rows]
+
+    fig, ax = plt.subplots(figsize=(9, 3.2), dpi=150)
+    ax.plot(labels, values, color="#0f766e", linewidth=2.4, marker="o", markersize=3.5)
+    ax.fill_between(labels, values, color="#0f766e", alpha=0.12)
+    ax.set_title("Traffic Trend Static Report", fontsize=12, pad=10)
+    ax.set_ylabel("GB")
+    ax.grid(axis="y", alpha=0.22)
+    ax.tick_params(axis="x", labelrotation=35, labelsize=7)
+    ax.tick_params(axis="y", labelsize=8)
+    fig.tight_layout()
+
+    buffer = io.BytesIO()
+    fig.savefig(buffer, format="png", bbox_inches="tight")
+    plt.close(fig)
+    buffer.seek(0)
+    response = make_response(buffer.getvalue())
+    response.headers["Content-Type"] = "image/png"
+    response.headers["Cache-Control"] = "no-store"
+    return response
 
 
 @bp.route("/api/collect/run", methods=["POST"])

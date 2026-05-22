@@ -29,6 +29,9 @@ def test_analytics_summary_contains_required_dimensions(tmp_path):
     assert summary["category_distribution"]
     assert summary["user_type_distribution"]
     assert summary["top_users"]
+    assert summary["access_heatmap"]
+    assert summary["user_profiles"]
+    assert {"user_id", "favorite_category", "risk_level"} <= set(summary["user_profiles"][0])
 
 
 def test_query_logs_filters_by_user_type_and_protocol(tmp_path):
@@ -65,6 +68,7 @@ def test_api_endpoints_return_data(tmp_path):
     dashboard = client.get("/api/dashboard")
     logs = client.get("/api/logs?user_type=student&page=1")
     anomalies = client.get("/api/anomalies")
+    static_chart = client.get("/api/charts/static/traffic.png")
 
     assert dashboard.status_code == 200
     assert dashboard.get_json()["totals"]["logs"] == 260
@@ -72,6 +76,9 @@ def test_api_endpoints_return_data(tmp_path):
     assert logs.get_json()["items"]
     assert anomalies.status_code == 200
     assert anomalies.get_json()["items"]
+    assert static_chart.status_code == 200
+    assert static_chart.headers["Content-Type"] == "image/png"
+    assert static_chart.data.startswith(b"\x89PNG")
 
 
 def test_logs_api_supports_pagination_and_export(tmp_path):

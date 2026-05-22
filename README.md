@@ -21,10 +21,12 @@ This project is designed as a graduation/student project, so the business logic 
   - anomaly count
 - User behavior analysis:
   - traffic trend
+  - access heatmap
   - protocol distribution
   - access category distribution
   - user type distribution
   - application distribution
+  - user behavior profiles
   - top traffic users
 - Anomaly detection:
   - rule-based detection for high-frequency connections, abnormal high traffic, port scanning, and suspicious access
@@ -46,6 +48,7 @@ This project is designed as a graduation/student project, so the business logic 
 - Pandas
 - NumPy
 - scikit-learn
+- Matplotlib
 - ECharts
 - HTML / CSS / JavaScript
 - pytest

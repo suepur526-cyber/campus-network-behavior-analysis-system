@@ -60,6 +60,45 @@ function renderRanks(id, users) {
   `).join("") || "<p>暂无数据</p>";
 }
 
+function renderHeatmap(rows) {
+  const element = document.getElementById("accessHeatmap");
+  if (!element || !window.echarts) return;
+  const chart = echarts.init(element);
+  chart.setOption({
+    color: ["#0f766e"],
+    tooltip: {
+      position: "top",
+      formatter: item => `星期${["一", "二", "三", "四", "五", "六", "日"][item.value[1]]} ${item.value[0]}:00<br>${item.value[2]} MB`
+    },
+    grid: { left: 58, right: 20, top: 20, bottom: 38 },
+    xAxis: { type: "category", data: Array.from({ length: 24 }, (_, i) => `${i}:00`), splitArea: { show: true } },
+    yAxis: { type: "category", data: ["周一", "周二", "周三", "周四", "周五", "周六", "周日"], splitArea: { show: true } },
+    visualMap: {
+      min: 0,
+      max: Math.max(1, ...rows.map(row => row[2])),
+      calculable: true,
+      orient: "horizontal",
+      left: "center",
+      bottom: 0,
+      inRange: { color: ["#e8f5f2", "#68b6a9", "#0f766e"] }
+    },
+    series: [{ type: "heatmap", data: rows, label: { show: false }, emphasis: { itemStyle: { shadowBlur: 10, shadowColor: "rgba(0,0,0,.18)" } } }]
+  });
+  window.addEventListener("resize", () => chart.resize());
+}
+
+function renderProfiles(profiles) {
+  const table = document.getElementById("profileTable");
+  if (!table) return;
+  table.innerHTML = profiles.map(row => `
+    <tr>
+      <td>${row.user_id}</td><td>${row.user_type}</td><td>${row.visits}</td><td>${row.traffic_mb} MB</td>
+      <td>${row.favorite_category} / ${row.main_protocol}</td><td>${row.active_hour}</td>
+      <td><span class="badge ${row.risk_level === "高" ? "high" : row.risk_level === "中" ? "medium" : "ok"}">${row.risk_level}</span></td>
+    </tr>
+  `).join("") || "<tr><td colspan='7'>暂无画像数据，请先接入日志。</td></tr>";
+}
+
 function renderAlerts(alerts) {
   const el = document.getElementById("alertList");
   if (!el) return;
@@ -82,6 +121,8 @@ async function loadDashboard() {
   renderTraffic("analysisTraffic", data.traffic_by_hour);
   makeChart("userTypeChart", pieOption(data.user_type_distribution));
   makeChart("appChart", pieOption(data.application_distribution));
+  renderHeatmap(data.access_heatmap || []);
+  renderProfiles(data.user_profiles || []);
   renderRanks("analysisTopUsers", data.top_users);
   makeChart("anomalyTypeChart", pieOption(data.anomaly_types));
 }
