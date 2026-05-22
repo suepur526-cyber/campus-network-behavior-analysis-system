@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}多维用户行为分析{% endblock %}
+{% block content %}
+<section class="dashboard-grid">
+  <div class="panel wide"><h2>时间维度：上网高峰</h2><div class="chart" id="analysisTraffic"></div></div>
+  <div class="panel"><h2>群体维度</h2><div class="chart" id="userTypeChart"></div></div>
+  <div class="panel"><h2>内容维度</h2><div class="chart" id="appChart"></div></div>
+  <div class="panel wide"><h2>流量维度：用户排行</h2><div id="analysisTopUsers" class="rank-list large"></div></div>
+</section>
+{% endblock %}

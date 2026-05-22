@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>登录 - 校园网用户行为分析系统</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+  </head>
+  <body class="login-body">
+    <main class="login-shell">
+      <section class="login-panel">
+        <div class="brand login-brand">
+          <span class="brand-mark">CN</span>
+          <div>
+            <strong>CampusNet</strong>
+            <small>校园网用户行为分析系统</small>
+          </div>
+        </div>
+        <h1>系统登录</h1>
+        <p>请输入管理员账号进入日志分析与安全检测平台。</p>
+        {% if error %}<div class="notice">{{ error }}</div>{% endif %}
+        <form method="post" class="login-form">
+          <label>用户名 <input name="username" value="admin" autocomplete="username" required></label>
+          <label>密码 <input name="password" type="password" autocomplete="current-password" required></label>
+          <button type="submit">登录系统</button>
+        </form>
+      </section>
+    </main>
+  </body>
+</html>

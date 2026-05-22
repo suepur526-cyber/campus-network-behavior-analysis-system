@@ -1,0 +1,13 @@
+user_id,user_type,ip_address,timestamp,target,category,application,protocol,port,upload_bytes,download_bytes,connection_count,device,source_format
+stu146,student,10.6.32.115,2026-05-07 09:41:00,mooc.campus.example,security,PortProbe,TCP,3389,1270103,1516353,260,router,generated
+stu131,student,10.6.48.98,2026-05-06 02:28:00,clouddrive.campus.example,office,CloudDrive,HTTPS,443,612823,15777749,6,firewall,generated
+stu116,student,10.6.211.132,2026-05-09 19:48:00,gamelobby.campus.example,game,GameLobby,UDP,3306,1148903,3168135,7,firewall,generated
+stu128,student,10.2.234.162,2026-05-06 07:56:00,mooc.campus.example,video,Bilibili,HTTP,80,418062,950000000,2,firewall,generated
+stu069,student,10.11.220.214,2026-05-10 06:19:00,meetinglive.campus.example,video,MeetingLive,DNS,53,3754717,6278220,15,firewall,generated
+stu132,student,10.8.142.142,2026-05-04 10:33:00,clouddrive.campus.example,office,CloudDrive,HTTPS,443,272130,8695585,8,ids,generated
+stu178,student,10.2.146.120,2026-05-02 09:57:00,clouddrive.campus.example,office,CloudDrive,HTTPS,443,180000000,260000000,420,router,generated
+tea129,teacher,10.3.234.178,2026-05-03 17:13:00,cnki.campus.example,study,CNKI,HTTPS,443,1108453,12086907,6,ids,generated
+vis076,visitor,10.1.92.177,2026-05-12 08:33:00,meetinglive.campus.example,video,MeetingLive,TCP,3306,1515309,21764068,10,ids,generated
+tea027,teacher,10.3.173.120,2026-05-08 08:45:00,wechat.campus.example,security,PortProbe,TCP,3389,1585300,1302531,260,firewall,generated
+stu060,student,10.3.229.152,2026-05-09 09:52:00,ssh.campus.example,security,SSH,HTTPS,443,3945635,788426,13,proxy,generated
+stu046,student,10.8.242.189,2026-05-05 05:14:00,github.campus.example,study,GitHub,DNS,53,1547074,31819940,11,firewall,generated

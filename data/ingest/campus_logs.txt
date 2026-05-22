@@ -1,0 +1,12 @@
+2026-05-07 09:41:00 router user=stu146 type=student ip=10.6.32.115 target=mooc.campus.example category=security app=PortProbe proto=TCP port=3389 up=1270103 down=1516353 conn=260
+2026-05-06 02:28:00 firewall user=stu131 type=student ip=10.6.48.98 target=clouddrive.campus.example category=office app=CloudDrive proto=HTTPS port=443 up=612823 down=15777749 conn=6
+2026-05-09 19:48:00 firewall user=stu116 type=student ip=10.6.211.132 target=gamelobby.campus.example category=game app=GameLobby proto=UDP port=3306 up=1148903 down=3168135 conn=7
+2026-05-06 07:56:00 firewall user=stu128 type=student ip=10.2.234.162 target=mooc.campus.example category=video app=Bilibili proto=HTTP port=80 up=418062 down=950000000 conn=2
+2026-05-10 06:19:00 firewall user=stu069 type=student ip=10.11.220.214 target=meetinglive.campus.example category=video app=MeetingLive proto=DNS port=53 up=3754717 down=6278220 conn=15
+2026-05-04 10:33:00 ids user=stu132 type=student ip=10.8.142.142 target=clouddrive.campus.example category=office app=CloudDrive proto=HTTPS port=443 up=272130 down=8695585 conn=8
+2026-05-02 09:57:00 router user=stu178 type=student ip=10.2.146.120 target=clouddrive.campus.example category=office app=CloudDrive proto=HTTPS port=443 up=180000000 down=260000000 conn=420
+2026-05-03 17:13:00 ids user=tea129 type=teacher ip=10.3.234.178 target=cnki.campus.example category=study app=CNKI proto=HTTPS port=443 up=1108453 down=12086907 conn=6
+2026-05-12 08:33:00 ids user=vis076 type=visitor ip=10.1.92.177 target=meetinglive.campus.example category=video app=MeetingLive proto=TCP port=3306 up=1515309 down=21764068 conn=10
+2026-05-08 08:45:00 firewall user=tea027 type=teacher ip=10.3.173.120 target=wechat.campus.example category=security app=PortProbe proto=TCP port=3389 up=1585300 down=1302531 conn=260
+2026-05-09 09:52:00 proxy user=stu060 type=student ip=10.3.229.152 target=ssh.campus.example category=security app=SSH proto=HTTPS port=443 up=3945635 down=788426 conn=13
+2026-05-05 05:14:00 firewall user=stu046 type=student ip=10.8.242.189 target=github.campus.example category=study app=GitHub proto=DNS port=53 up=1547074 down=31819940 conn=11

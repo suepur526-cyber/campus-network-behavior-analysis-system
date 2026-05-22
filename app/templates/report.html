@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}系统测试报告与运行状态{% endblock %}
+{% block content %}
+<section class="metric-grid" id="reportMetrics"></section>
+<section class="split-grid">
+  <form class="panel form-panel" id="collectForm">
+    <h2>目录采集验证</h2>
+    <p>系统会扫描配置好的接入目录，对新日志文件执行解析、清洗、入库和采集记录保存。重复文件不会再次导入。</p>
+    <p>接入目录：<code id="ingestFolder"></code></p>
+    <button type="submit">执行目录采集</button>
+    <p id="collectResult"></p>
+  </form>
+  <div class="panel">
+    <h2>系统运行状态</h2>
+    <div id="systemStatus" class="status-list"></div>
+  </div>
+</section>
+<section class="dashboard-grid">
+  <div class="panel"><h2>异常检测效果评估</h2><div id="qualityList" class="status-list"></div></div>
+  <div class="panel"><h2>性能指标</h2><div id="performanceList" class="status-list"></div></div>
+  <div class="panel"><h2>验证用例</h2><div id="testCaseList" class="status-list"></div></div>
+</section>
+{% endblock %}

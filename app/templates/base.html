@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>CampusNet 校园网用户行为分析系统</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <script src="{{ url_for('static', filename='js/echarts.min.js') }}"></script>
+  </head>
+  <body data-page="{{ active }}">
+    <aside class="sidebar">
+      <div class="brand">
+        <span class="brand-mark">CN</span>
+        <div>
+          <strong>CampusNet</strong>
+          <small>校园网用户行为分析系统</small>
+        </div>
+      </div>
+      <nav>
+        <a class="{{ 'active' if active == 'dashboard' else '' }}" href="/">总览仪表盘</a>
+        <a class="{{ 'active' if active == 'import' else '' }}" href="/import">日志接入</a>
+        <a class="{{ 'active' if active == 'logs' else '' }}" href="/logs">日志查询</a>
+        <a class="{{ 'active' if active == 'analysis' else '' }}" href="/analysis">行为分析</a>
+        <a class="{{ 'active' if active == 'anomalies' else '' }}" href="/anomalies">异常检测</a>
+        <a class="{{ 'active' if active == 'report' else '' }}" href="/report">测试报告</a>
+      </nav>
+    </aside>
+    <main class="main">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">Python / Flask / SQLAlchemy / Pandas / scikit-learn / ECharts</p>
+          <h1>{% block title %}{% endblock %}</h1>
+        </div>
+        <div class="user-area">
+          <div class="status-pill">系统运行中</div>
+          <span>{{ session.get("display_name", "管理员") }}</span>
+          <a href="/logout">退出</a>
+        </div>
+      </header>
+      {% block content %}{% endblock %}
+    </main>
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+  </body>
+</html>

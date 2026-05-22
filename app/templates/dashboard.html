@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}校园网用户行为总览{% endblock %}
+{% block content %}
+<section class="metric-grid" id="metrics"></section>
+<section class="dashboard-grid">
+  <div class="panel wide"><h2>流量趋势</h2><div class="chart" id="trafficChart"></div></div>
+  <div class="panel"><h2>协议分布</h2><div class="chart" id="protocolChart"></div></div>
+  <div class="panel"><h2>访问类别</h2><div class="chart" id="categoryChart"></div></div>
+  <div class="panel"><h2>近期告警</h2><div id="alertList" class="alert-list"></div></div>
+  <div class="panel"><h2>流量用户排行</h2><div id="topUsers" class="rank-list"></div></div>
+</section>
+{% endblock %}

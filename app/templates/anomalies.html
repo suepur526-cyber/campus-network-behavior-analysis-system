@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}异常行为检测{% endblock %}
+{% block content %}
+{% if message %}<div class="notice">{{ message }}</div>{% endif %}
+<section class="panel action-panel">
+  <div>
+    <h2>规则检测 + 机器学习检测</h2>
+    <p>规则覆盖高频连接、异常大流量、端口扫描、可疑访问；机器学习使用 KMeans 和 Isolation Forest。</p>
+  </div>
+  <form method="post"><button type="submit">立即检测异常</button></form>
+</section>
+<section class="dashboard-grid">
+  <div class="panel"><h2>异常类型</h2><div class="chart" id="anomalyTypeChart"></div></div>
+  <div class="panel wide">
+    <h2>告警列表</h2>
+    <div class="pager">
+      <button id="prevAlertPage" type="button">上一页</button>
+      <span id="alertPageInfo">第 1 页</span>
+      <button id="nextAlertPage" type="button">下一页</button>
+    </div>
+    <div class="table-wrap"><table><thead><tr><th>时间</th><th>级别</th><th>类型</th><th>检测方式</th><th>说明</th></tr></thead><tbody id="anomalyTable"></tbody></table></div>
+  </div>
+</section>
+{% endblock %}

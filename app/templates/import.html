@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}日志接入与数据源管理{% endblock %}
+{% block content %}
+{% if message %}<div class="notice">{{ message }}</div>{% endif %}
+<section class="split-grid">
+  <form class="panel form-panel" method="post" enctype="multipart/form-data">
+    <h2>上传日志文件</h2>
+    <p>支持 CSV、JSON、TXT/Syslog-like 文件。系统会在导入时自动完成清洗、去重、字段标准化和结构化存储。</p>
+    <input type="file" name="file" accept=".csv,.json,.txt,.log" required>
+    <button type="submit">上传并导入</button>
+  </form>
+  <form class="panel form-panel" method="post">
+    <h2>导入验证数据源</h2>
+    <p>用于没有真实校园网设备权限时的功能验证。数据结构按防火墙、路由器、代理服务器日志字段设计。</p>
+    <label>日志数量 <input type="number" name="rows" value="1200" min="100" max="50000"></label>
+    <button type="submit" name="sample" value="1">生成并导入</button>
+  </form>
+</section>
+<section class="panel">
+  <h2>统一日志字段</h2>
+  <div class="tag-row">
+    <span>用户ID</span><span>用户类型</span><span>IP地址</span><span>访问时间</span><span>目标域名</span>
+    <span>应用类别</span><span>协议</span><span>端口</span><span>上下行流量</span><span>连接数</span>
+  </div>
+</section>
+{% endblock %}
