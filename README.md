@@ -1,59 +1,57 @@
-# Campus Network User Behavior Analysis System
+# 基于 Python 的校园网用户行为分析系统
 
-A Flask-based campus network user behavior analysis system. The system provides a complete workflow for log ingestion, data cleaning, behavior statistics, anomaly detection, visualization, log query, CSV export, directory collection, and test reporting.
+本项目是一个面向毕业设计和答辩演示的校园网用户行为分析系统。系统围绕校园网日志数据展开，提供日志接入、数据清洗、行为统计、异常检测、可视化展示、日志查询、CSV 导出、目录采集和测试报告等完整功能。
 
-This project is designed as a graduation/student project, so the business logic is complete but kept clear and maintainable. It can run locally with SQLite by default, and it can also be switched to MySQL through `DATABASE_URL`.
+系统采用 Python + Flask 技术栈开发，默认使用 SQLite 数据库，便于本地运行和答辩演示；也支持通过 `DATABASE_URL` 切换到 MySQL。项目业务逻辑保持清晰，功能链路是真实可运行的端到端流程。
 
-## Features
+## 一、项目功能
 
-- User login, logout, and protected pages.
-- Default administrator account creation.
-- CSV, JSON, TXT, and syslog-like log parsing.
-- Log cleaning, deduplication, timestamp normalization, numeric field correction, and unified field storage.
-- Manual file upload and import.
-- Validation data generation and import.
-- Directory-based log collection from `data/ingest`.
-- File hash and file name deduplication for directory collection.
-- Dashboard metrics:
-  - total logs
-  - total users
-  - traffic volume
-  - anomaly count
-- User behavior analysis:
-  - traffic trend
-  - access heatmap
-  - protocol distribution
-  - access category distribution
-  - user type distribution
-  - application distribution
-  - user behavior profiles
-  - top traffic users
-- Anomaly detection:
-  - rule-based detection for high-frequency connections, abnormal high traffic, port scanning, and suspicious access
-  - machine learning detection with KMeans and Isolation Forest
-- Alert list with pagination.
-- Log query with keyword, user type, protocol, and anomaly status filters.
-- CSV export for current query result.
-- System status and test report page.
-- Automated tests for core backend and API workflows.
-- Browser QA verified for key pages, buttons, forms, pagination, export, layout, and console/network health.
+- 管理员登录、退出登录和受保护页面访问控制。
+- 默认管理员账号初始化。
+- 支持 CSV、JSON、TXT 和类 Syslog 文本日志解析。
+- 支持日志字段标准化、时间格式转换、数值异常修正、缺失字段补齐和重复记录去除。
+- 支持手动上传日志文件并导入数据库。
+- 支持生成验证数据并导入系统。
+- 支持从 `data/ingest` 目录采集日志文件。
+- 目录采集支持文件名和 SHA256 哈希去重，避免重复导入。
+- 总览仪表盘展示日志总数、用户数、总流量和异常数量。
+- 用户行为分析包括：
+  - 流量趋势
+  - 访问热力图
+  - 协议分布
+  - 访问类别分布
+  - 用户类型分布
+  - 应用分布
+  - 用户画像
+  - 用户流量排行
+- 异常检测包括：
+  - 基于规则的高频连接、异常大流量、端口扫描、可疑访问检测
+  - 基于 KMeans 和 Isolation Forest 的机器学习异常检测
+- 异常告警列表支持分页展示。
+- 日志查询支持关键词、用户类型、协议和异常状态筛选。
+- 支持按当前查询条件导出 CSV 文件。
+- 支持 Matplotlib 静态流量趋势图接口。
+- 支持系统状态和测试报告展示。
+- 提供 pytest 自动化测试，覆盖核心后端功能和 API 流程。
 
-## Technology Stack
+## 二、技术栈
 
 - Python 3.11
-- Flask 3
+- Flask
 - Flask-SQLAlchemy
-- SQLite by default
-- MySQL support through `DATABASE_URL`
+- SQLite，默认本地数据库
+- MySQL，可通过 `DATABASE_URL` 切换
 - Pandas
 - NumPy
 - scikit-learn
+- KMeans
+- Isolation Forest
 - Matplotlib
 - ECharts
 - HTML / CSS / JavaScript
 - pytest
 
-## Project Structure
+## 三、项目结构
 
 ```text
 .
@@ -73,8 +71,6 @@ This project is designed as a graduation/student project, so the business logic 
 |   |   +-- sample_data.py
 |   |   +-- status.py
 |   +-- static/
-|   |   +-- css/styles.css
-|   |   +-- js/
 |   +-- templates/
 +-- data/
 |   +-- ingest/
@@ -85,71 +81,74 @@ This project is designed as a graduation/student project, so the business logic 
 +-- run.py
 ```
 
-## Quick Start
+## 四、快速启动
 
-Install dependencies:
+安装依赖：
 
 ```powershell
 python -m pip install -r requirements.txt
 ```
 
-Initialize the database:
+初始化数据库：
 
 ```powershell
 $env:FLASK_APP = "run.py"
 flask init-db
 ```
 
-Optional: add sample data and run anomaly detection:
+生成样例日志并执行异常检测：
 
 ```powershell
 flask seed-data
 flask detect-anomalies
 ```
 
-Start the system:
+启动系统：
 
 ```powershell
 python run.py
 ```
 
-Open:
+访问地址：
 
 ```text
 http://127.0.0.1:5000/login
 ```
 
-Default administrator:
+默认管理员账号：
 
 ```text
-Username: admin
-Password: admin123
+用户名：admin
+密码：admin123
 ```
 
-## Main Pages
+## 五、主要页面
 
-- Dashboard: `/`
-- Log ingestion: `/import`
-- Log query: `/logs`
-- Behavior analysis: `/analysis`
-- Anomaly detection: `/anomalies`
-- Test report and system status: `/report`
+| 页面 | 地址 | 说明 |
+|:--|:--|:--|
+| 登录页面 | `/login` | 管理员登录认证 |
+| 总览仪表盘 | `/` | 查看日志总量、用户数量、流量趋势和异常概况 |
+| 日志接入 | `/import` | 上传日志、生成验证数据、导入数据库 |
+| 日志查询 | `/logs` | 日志筛选、分页查询和 CSV 导出 |
+| 行为分析 | `/analysis` | 用户行为统计、热力图、用户画像和排行 |
+| 异常检测 | `/anomalies` | 执行异常检测并查看告警列表 |
+| 测试报告 | `/report` | 查看系统状态、质量指标、性能指标和测试用例 |
 
-## Database Configuration
+## 六、数据库配置
 
-The system uses SQLite by default:
+系统默认使用 SQLite：
 
 ```text
 campus_network.db
 ```
 
-For MySQL, create a database first:
+如果需要切换到 MySQL，可以先创建数据库：
 
 ```sql
 CREATE DATABASE campus_network CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 ```
 
-Then configure:
+然后配置环境变量：
 
 ```powershell
 $env:DATABASE_URL = "mysql+pymysql://root:your_password@127.0.0.1:3306/campus_network?charset=utf8mb4"
@@ -161,89 +160,61 @@ flask detect-anomalies
 python run.py
 ```
 
-If `DATABASE_URL` is not set, the system automatically uses SQLite.
+如果不设置 `DATABASE_URL`，系统会自动使用 SQLite。
 
-## Testing
+## 七、测试方式
 
-Run automated tests:
+运行自动化测试：
 
 ```powershell
 pytest -q
 ```
 
-Latest local verification:
+当前本地验证结果：
 
 ```text
 17 passed
 ```
 
-The test suite covers:
+测试覆盖内容包括：
 
-- route rendering
-- health endpoint
-- login and logout
-- protected page redirects
-- sample data generation
-- CSV / JSON / TXT parsing
-- data cleaning and deduplication
-- database import
-- analytics API
-- log filtering
-- CSV export
-- anomaly detection
-- directory collection
-- system status report
+- 页面路由渲染
+- 健康检查接口
+- 登录和退出登录
+- 未登录访问保护
+- 样例数据生成
+- CSV / JSON / TXT 日志解析
+- 数据清洗与去重
+- 数据库导入
+- 行为分析 API
+- 日志筛选查询
+- CSV 导出
+- 异常检测
+- 目录采集
+- 系统状态和测试报告接口
 
-## Browser QA Result
+## 八、答辩演示建议
 
-The system was also tested with real browser interactions. The final deep QA report includes:
+推荐演示顺序：
 
-```text
-53 checks
-0 failures
-0 console problems
-0 page errors
-0 bad HTTP responses
-```
+1. 使用管理员账号登录系统。
+2. 打开总览仪表盘，介绍日志数量、用户数量、流量趋势和异常数量。
+3. 打开日志接入页面，演示生成验证数据或上传日志文件。
+4. 打开日志查询页面，演示筛选、分页和 CSV 导出。
+5. 打开行为分析页面，说明流量趋势、协议分布、访问热力图、用户画像和用户排行。
+6. 打开异常检测页面，点击执行异常检测。
+7. 说明规则检测和机器学习检测的区别。
+8. 打开测试报告页面，展示系统状态、质量指标、性能指标和测试用例结果。
+9. 如需证明系统可运行，可现场执行 `pytest -q`。
 
-Verified browser workflows:
+## 九、真实部署说明
 
-- login with valid and invalid credentials
-- protected page redirect
-- every main navigation page
-- desktop layout overflow check
-- mobile layout overflow check
-- file upload import
-- validation data generation
-- log keyword search
-- log empty state
-- log pagination
-- CSV export
-- behavior analysis chart rendering
-- anomaly detection execution
-- anomaly pagination
-- directory collection
-- system status and test report rendering
-- logout
+- 正式部署时应设置强随机 `SECRET_KEY`。
+- 多用户或长期运行场景建议使用 MySQL 或 PostgreSQL。
+- 真实校园网日志应先进行脱敏处理，避免泄露用户隐私。
+- 真实设备日志可通过定时任务、Rsyslog、Filebeat 等方式放入采集目录。
+- 对公网部署时建议配置 HTTPS、反向代理、访问控制和数据备份。
 
-## Defense Demonstration Flow
+## 十、说明
 
-Recommended demonstration order:
-
-1. Login as administrator.
-2. Open the dashboard and introduce the overall metrics and charts.
-3. Open the log ingestion page and import validation data.
-4. Open the log query page and demonstrate filtering, pagination, and CSV export.
-5. Open the behavior analysis page and explain the traffic, protocol, category, user type, application, and ranking charts.
-6. Open the anomaly detection page and run detection.
-7. Explain rule-based detection and machine learning detection.
-8. Open the report page and show runtime status, quality metrics, performance metrics, and test cases.
-9. Run `pytest -q` to show automated test results if needed.
-
-## Notes For Real Deployment
-
-- Use a strong `SECRET_KEY`.
-- Use MySQL or another production database for multi-user or long-running deployment.
-- Place real or exported device logs into a secured ingestion directory.
-- Avoid committing real user logs or sensitive network data.
-- Add HTTPS and reverse proxy configuration for public deployment.
+本系统是毕业设计项目，重点展示校园网日志数据从接入、清洗、分析、异常检测到可视化展示的完整流程。系统没有直接接入真实校园网设备，但使用结构化验证日志覆盖典型访问行为和异常场景，能够完整验证系统功能链路。
